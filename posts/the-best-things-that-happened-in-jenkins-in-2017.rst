@@ -71,7 +71,12 @@ The old Jenkins wouldn't be able to run these and when we were deciding wether t
 we have decided to build a new one.
 
 And pipelines did deliver. Groovy is much more flexible language than bash that we used previously for most of our automation.
+We managed to automate most of our release process and large parts of our deployment process. We don't think we would have managed that without groovy,
+as during the release process we need to process, build and tag over 60 repositories.
 
+Another nice thing that emerged over the year is better support for groovy itself. Running pipelines should be resilient to things like shutdowns and restarts of Jenkins. Unfortunately this meant that for long time, you couldn't use standard groovy methods like collect or each, because the resulting code wouldn't be serializable, and you would need to use workaround with @NonCPS annotation.
+
+Fortunately, since TODO, most of these work, making for a much nicer environment to programm in!
 
 With Github Organization Folders you can create your own custom Travis
 ~~~~~~~~
