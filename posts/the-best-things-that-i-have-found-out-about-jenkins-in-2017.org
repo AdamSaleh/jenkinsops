@@ -2,7 +2,7 @@
 .. title: The Best Things that I have found out about Jenkins in 2017
 .. slug: the-best-things-that-i-have-found-out-about-jenkins-in-2017
 .. date: 2018-01-08 18:13:18 UTC+01:00
-.. tags: 
+.. tags: draft
 .. category: 
 .. link: 
 .. description: 
