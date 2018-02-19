@@ -1,0 +1,67 @@
+#+BEGIN_COMMENT
+.. title: Set up Jenkins for groovy script configuration
+.. slug: set-up-jenkins-for-groovy-script-configuration
+.. date: 2018-02-04 22:09:19 UTC+01:00
+.. tags: 
+.. category: 
+.. link: 
+.. description: 
+.. type: text
+#+END_COMMENT
+
+** Why would you want to do this?
+
+When I started working on new Jenkins configuration with my colleagues,
+high on our list of priorities was having reproducible configuration for our Jenkins.
+
+Previously we maintained everything by hand, mostly through the web-based configuration,
+saved the resulting xmls, and hoped, that if something bad happens, we would be able to restore
+xml on new Jenkins instance and fix any occuring problems manually.
+
+As we realized later, Jenkins is surprisingly configurable through it's embedded Groovy console.
+That let us to our plan, where we would write Groovy scripts for configuring various aspects
+of Jenkins and then tie all of them together with an overarching configuration shell-script.
+
+For this to work, we needed to enable remoting over CLI. This guide will show you how.
+
+** Should you want to do this?
+
+If you ever tried to do this before, you might have noticed the warnings, that enabling remoting
+leads to security vulnerability. You are practically giving access to all of the Jenkins internals
+to anybody with your key/password and you will be greeted with 
+
+"Allowing Jenkins CLI to work in -remoting mode is considered dangerous and usually unnecessary. You are advised to disable this mode."
+
+and big blue button to disable remoting every time you go to "Manage Jenkins" through the web-console.
+
+So, before you bring this into production maybe double-check if there is better way.
+Jenkins supports access over ssh protocol as well, even though in more limited fashion.
+Unfortunately, I haven't been able to find a way to distinguish the Jenkins CLI commands that would
+require remoting and those that would be fine with going through ssh/http.
+
+In future I should look inte the alternatives of directly running Groovy scripts.
+
+For now, we really liked the flexibility that remoting gives us so we went all in. 
+
+** How would you do this?
+
+This is a good place to [[https://jenkins.io/doc/book/managing/cli/][link the official documentation]]. Briefly, it could be summarized in these steps:
+- add your ssh public key to your account
+- enable TCP port for JNLP agents
+- enable remoting for cli
+- download the client and run it with Java
+
+After you are done with these four steps you should be able to run all of the cli commands against your Jenkins.
+
+*** Add your ssh public key to your account
+
+In you account settings, found at https://$JENKINS_URL/user/$USERNAME/configure you should
+set your ssh public key. 
+
+ [[./images/user_ssh_pubkey.png]]
+
+If you are not familiar with setting up ssh keys, or you would like to generate new one,
+but keep forgetting how did you do that last time (as happens to me roughly once a month),
+you can consult a great guide on [[https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/][Github that explains the ssh generation step-by-step]].
+
+*** Enable TCP port for JNLP agents
