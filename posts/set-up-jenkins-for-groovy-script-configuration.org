@@ -65,3 +65,56 @@ but keep forgetting how did you do that last time (as happens to me roughly once
 you can consult a great guide on [[https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/][Github that explains the ssh generation step-by-step]].
 
 *** Enable TCP port for JNLP agents
+
+The preffered option for connecting for cli is JNLP.
+In theory, if this isn't enabled, the cli binary should
+fall back to http. In practice, for certain commands,
+such as the groovy command we wanted to be using, 
+you'd receive error about JNLP not being available.
+
+To enable it, go to Manage Jenkins > Configure Global Security and choose "Fixed" or "Random" under TCP port for JNLP agents.
+
+I would advise to set a specific port, so that you can
+enable the port in your firewall.
+
+*** Enable remoting for CLI
+
+Before you can use groovy scripts you need to enable remoting over cli by checking the "Enable CLI over Remoting" in Manage Jenkins > Configure Global Security.
+As I mentioned, Jenkins will advise you against this, unfortunately, to take advatage of the groovy scripting through Jenkins cli, this really needs to be enabled.
+
+  
+*** Download the cli client and run it
+
+You can find the download link directly in your Jenkins instance, through Manage Jenkins > Jenkins CLI, you should even be able to download it directly from
+https://$JENKINS_URL/jnlpJars/jenkins-cli.jar. To execute it, you will need java runtime present. 
+
+To test out the setup, lets use the example you'd find if you wanted to try groovy-scripting from the web-console.
+The example there could be translated to a file ~plugin_list.groovy~ like this: 
+
+#+NAME: plugins_list.groovy 
+#+BEGIN_SRC groovy :tangle ../files/scripts/plugins_list.groovy :exports none
+import jenkins.model.*
+
+println(Jenkins.instance.pluginManager.plugins)
+#+END_SRC
+
+You should now be able to execute the file by running:
+
+#+BEGIN_SRC bash
+java -jar  jenkins-cli.jar -remoting -s https://$JENKINS_URL groovy plugin_list.groovy
+#+END_SRC
+
+and see something along the lines: 
+
+#+BEGIN_SRC groovy
+[Plugin:ssh-credentials, Plugin:workflow-job, Plugin:pipeline-github-lib, Plugin:workflow-basic-steps, Plugin:ws-cleanup, Plugin:pipeline-rest-api, Plugin:pipeline-model-api, Plugin:handlebars, Plugin:ace-editor]
+#+END_SRC
+
+** To conclude
+
+Now you have unlocked probably most versatile way to configure Jenkins. As they say, whith great power comes great responsibility
+(alongside possible security vulnerabilities), but we really like the power! Most of the scripts I will be describing in other posts utilize
+groovy-scripts for configuration in one way or other, so unless I find a better way to do this sort of configuration,
+cli over remoting and groovy scripts are there to stay in our Jenkins configuration.
+
+If you liked this, and want to ask anything, (or didn't and want to tell me how to do something better), feel free to write me an email to adam at asaleh.net!
