@@ -25,7 +25,7 @@ SITE_URL = "http://jenkinsops.com/"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
 # BASE_URL = "http://asaleh.net/"
-BLOG_EMAIL = "adam@"
+BLOG_EMAIL = "adam@asaleh.net"
 BLOG_DESCRIPTION = "Notes for operating a Jenkins instance in a dev-ops fashion."  # (translatable)
 
 # Nikola is multilingual!
@@ -873,10 +873,9 @@ IMAGE_FOLDERS = {'images': 'images'}
 # FAVICONS contains (name, file, size) tuples.
 # Used to create favicon link like this:
 # <link rel="name" href="file" sizes="size"/>
-# FAVICONS = (
-#     ("icon", "/favicon.ico", "16x16"),
-#     ("icon", "/icon_128x128.png", "128x128"),
-# )
+FAVICONS = (
+     ("icon", "/favicon.ico", "16x16"),
+)
 
 # Show teasers (instead of full posts) in indexes? Defaults to False.
 INDEX_TEASERS = True

@@ -2,7 +2,7 @@
 .. title: The Best Things that I have found out about Jenkins in 2017
 .. slug: the-best-things-that-i-have-found-out-about-jenkins-in-2017
 .. date: 2018-01-08 18:13:18 UTC+01:00
-.. tags: draft
+.. tags: 
 .. category: 
 .. link: 
 .. description: 
@@ -72,7 +72,7 @@ Travis or CircleCI to our developers, while having much better control over the 
 ** Jenkins Job Builder is still useful
 
 I have mentioned that we have previously used Jenkins Job Builder for configuring build jobs for each of our repositories and that it was cumbersome.
-I could indentify several reasons why it wasn't working well:
+I could identify several reasons why it wasn't working well:
 - We needed all of our developers to be able to understand most of the job definitions
 - We needed to utilize templating, to map our job definitions to 60+ repositories 
 - Definitions themselves were mostly bash inside of templated yaml configuration, which lead to problems with escaping special characters
